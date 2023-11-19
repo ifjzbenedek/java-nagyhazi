@@ -8,15 +8,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class MyFrame extends JFrame implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener {
 
     final Timer t;
+
     Game game = new Game();
-    public MyFrame()
+    public GamePanel()
     {
-        super("2 player Base.Snake");
+
         this.setSize(800,800);
-        this.setResizable(true);
         this.setFocusable(true);
         t = new Timer(200,this);
         this.addKeyListener(new KeyAdapter() {
@@ -37,9 +37,9 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
     @Override
-    public void paint(Graphics g)
+    public void paintComponent(Graphics g)
     {
-        super.paint(g);
+        super.paintComponent(g);
         ArrayList<Coordinate> sTemp = game.getPlayer(0).getSnake().getCoordinates();
         g.setColor(Color.GREEN);
         DrawCoordinateArray(sTemp, g);
