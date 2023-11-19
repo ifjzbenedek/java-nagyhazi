@@ -14,33 +14,31 @@ public class Snake {
 		
 		direction = d;
 	}
-	
-	//gives back the snake's head's coordinate
-	//Base.EmptyException megírandó
-	public Coordinate GetHeadCoordinate() throws EmptyException
-	{
-		if(coordinates.isEmpty())
-			throw new EmptyException();
-		else
-			return coordinates.get(0);
-	}
-	
+
+	public ArrayList<Coordinate> getCoordinates()
+	{return coordinates;}
+
+	public Direction getDirection()
+	{return direction;}
 	
 	//shows whether the given coordinate is inside the snake 
 	//(will be important when deciding whether a snake bumped into another
 	//Base.EmptyException megírandó
-	boolean IsContained(Coordinate c) throws EmptyException
+	boolean IsContained(Coordinate c)
 	{
-		if(coordinates.isEmpty())
-			throw new EmptyException();
-		
-		//checks whether any of the coordinates of the Base.Snake equals to the given coordinate
-		for(int i = 0; i < coordinates.size(); i++)
-		{
-			if(coordinates.get(i).equals(c))
-				return true;
-		}
-		
+		try {
+			if (coordinates.isEmpty())
+				throw new EmptyException();
+
+			//checks whether any of the coordinates of the Base.Snake equals to the given coordinate
+			for (int i = 0; i < coordinates.size(); i++) {
+				if (coordinates.get(i).equals(c))
+					return true;
+			}
+
+			return false;
+		} catch(EmptyException e)
+		{}
 		return false;
 	}
 	
@@ -50,20 +48,36 @@ public class Snake {
 	}
 	
 	//Base.EmptyException megírandó
-	public void Move() throws EmptyException
+	public void Move()
 	{
-		if(coordinates.isEmpty())
-			throw new EmptyException();
-		Coordinate newHead = new Coordinate(-1, -1);
-		switch(direction)
-		{
-			case UP: newHead = new Coordinate(coordinates.get(0).GetPosX(),coordinates.get(0).GetPosY() + 1);
-			case DOWN: newHead = new Coordinate(coordinates.get(0).GetPosX(),coordinates.get(0).GetPosY() - 1);
-			case LEFT: newHead = new Coordinate(coordinates.get(0).GetPosX() - 1,coordinates.get(0).GetPosY());
-			case RIGHT: newHead = new Coordinate(coordinates.get(0).GetPosX() + 1,coordinates.get(0).GetPosY());
-		}
-		coordinates.add(0, newHead);
-		coordinates.remove(coordinates.size() - 1);
+		try {
+			if (coordinates.isEmpty())
+				throw new EmptyException();
+			Coordinate newHead = new Coordinate(-1, -1);
+			switch (direction) {
+				case UP:
+					newHead = new Coordinate(coordinates.get(0).GetPosX(), coordinates.get(0).GetPosY() - 1);
+					System.out.println("FEL" + " " + newHead.GetPosX() + " " + newHead.GetPosY());
+					break;
+				case DOWN:
+					newHead = new Coordinate(coordinates.get(0).GetPosX(), coordinates.get(0).GetPosY() + 1);
+					System.out.println("LE" + " " + newHead.GetPosX() + " " + newHead.GetPosY());
+					break;
+				case LEFT:
+					newHead = new Coordinate(coordinates.get(0).GetPosX() - 1, coordinates.get(0).GetPosY());
+					System.out.println("BALRA" + " " + newHead.GetPosX() + " " + newHead.GetPosY());
+					break;
+				case RIGHT:
+					newHead = new Coordinate(coordinates.get(0).GetPosX() + 1, coordinates.get(0).GetPosY());
+					System.out.println("JOBBRA" + " " + newHead.GetPosX() + " " + newHead.GetPosY());
+					break;
+			}
+			coordinates.add(0, newHead);
+			coordinates.remove(coordinates.size() - 1);
+			System.out.println("Hossz" + coordinates.size());
+
+		}catch(EmptyException ee)
+		{}
 	}
 	public void IncreaseSize() throws EmptyException
 	{
@@ -75,6 +89,10 @@ public class Snake {
 		
 		coordinates.add(new Coordinate(coordinates.get(idxOfLastCord).GetPosX() * 2 - coordinates.get(idxOfOneBeforeLastCord).GetPosX(),
 				coordinates.get(idxOfLastCord).GetPosY() * 2 - coordinates.get(idxOfOneBeforeLastCord).GetPosY()));
+	}
+	public Coordinate getHeadCoordinate()
+	{
+		return coordinates.get(0);
 	}
 	//megnézzük minden kör elején, ha true, akkor nyert a másik kígyót irányító player
 	public boolean SnakeIsEmpty()

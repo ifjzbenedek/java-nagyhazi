@@ -12,8 +12,20 @@ public class Player {
 		name = n;
 		snake = s;
 	}
+	public Snake getSnake()
+	{
+		return snake;
+	}
 	public void setOwnedPickUpAble(Item i)
 	{
 		ownedPickUpAble = i;
 	}
+	public Item getOwnedPickUpAble()
+	{
+		if(ownedPickUpAble != null)
+			return ownedPickUpAble;
+
+		return null;
+	}
+
 }

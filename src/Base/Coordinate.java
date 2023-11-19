@@ -22,14 +22,13 @@ public class Coordinate {
 
 	
 	//tesztelendő
-	public boolean equals(Object o)
+	public boolean equals(Coordinate c)
 	{
-		if(this == o)
+		if(this == c)
 			return true;
-		else if(this == null)
+		else if(c == null)
 			return false;
-		
-		Coordinate c = (Coordinate)o;
+
 		
 		return Objects.equals(PosX, c.GetPosX()) && Objects.equals(PosY, c.GetPosY());
 	}
