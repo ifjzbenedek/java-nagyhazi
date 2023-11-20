@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         this.setSize(800,800);
         this.setFocusable(true);
-        t = new Timer(200,this);
+        t = new Timer(20,this);
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -36,6 +36,10 @@ public class GamePanel extends JPanel implements ActionListener {
             g.fillRect(ac.get(i).GetPosX()*40, ac.get(i).GetPosY()*40, 40,40);
         }
     }
+    private void DrawCoordinate(Coordinate ac, Graphics g)
+    {
+        g.fillRect(ac.GetPosX()*40, ac.GetPosY()*40, 40,40);
+    }
     @Override
     public void paintComponent(Graphics g)
     {
@@ -52,6 +56,40 @@ public class GamePanel extends JPanel implements ActionListener {
         sTemp = game.getWalls();
         DrawCoordinateArray(sTemp, g);
 
+
+        for(int i = 0; i < game.getItems().size(); i++)
+        {
+            if(game.getItems().get(i).getName().equals("apple"))
+            {
+                g.setColor(Color.RED);
+                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
+            }
+            else if(game.getItems().get(i).getName().equals("lemon"))
+            {
+                g.setColor(Color.YELLOW);
+                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
+            }
+            else if(game.getItems().get(i).getName().equals("blueberry"))
+            {
+                g.setColor(Color.BLUE);
+                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
+            }
+            else if(game.getItems().get(i).getName().equals("orange"))
+            {
+                g.setColor(Color.ORANGE);
+                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
+            }
+            else if(game.getItems().get(i).getName().equals("kiwi"))
+            {
+                g.setColor(Color.GREEN);
+                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
+            }
+            else if(game.getItems().get(i).getName().equals("raspberry"))
+            {
+                g.setColor(Color.PINK);
+                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
+            }
+        }
     }
 
 

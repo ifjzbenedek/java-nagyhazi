@@ -4,7 +4,7 @@ import java.util.*;
 public class Snake {
 
 	private ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
-	private double moveTimer;
+	private double moveTimer = 1;
 	private Direction direction;
 
 	
@@ -18,6 +18,8 @@ public class Snake {
 	public ArrayList<Coordinate> getCoordinates()
 	{return coordinates;}
 
+	public double getMoveTimer()
+	{return moveTimer;}
 	public Direction getDirection()
 	{return direction;}
 	
@@ -79,13 +81,11 @@ public class Snake {
 		}catch(EmptyException ee)
 		{}
 	}
-	public void IncreaseSize() throws EmptyException
+	public void IncreaseSize()
 	{
 		int idxOfLastCord = coordinates.size()-1;
 		int idxOfOneBeforeLastCord = coordinates.size()-2;
-		
-		if(coordinates.isEmpty())
-			throw new EmptyException();
+
 		
 		coordinates.add(new Coordinate(coordinates.get(idxOfLastCord).GetPosX() * 2 - coordinates.get(idxOfOneBeforeLastCord).GetPosX(),
 				coordinates.get(idxOfLastCord).GetPosY() * 2 - coordinates.get(idxOfOneBeforeLastCord).GetPosY()));
@@ -105,11 +105,11 @@ public class Snake {
 	}
 	public void increaseSpeed()
 	{
-		moveTimer *= 0.8;
+		moveTimer = 0.7 * moveTimer;
 	}
 
 	public void decreaseSpeed()
 	{
-		moveTimer += 10*(2/moveTimer);
+		moveTimer = 1.3 * moveTimer;
 	}
 }

@@ -2,20 +2,19 @@ package Base;
 
 public class Raspberry extends Item {
 
-	public Raspberry(boolean pua)
+	public Raspberry()
 	{
-		super(pua);
 		name = "raspberry";
+		pickupable = false;
 	}
 	
 	public boolean Effect(Snake pickUp, Snake other)
 	{
-		try {
-			pickUp.IncreaseSize();
-		} catch(EmptyException ee){}
+		pickUp.IncreaseSize();
 		other.DecreaseSize();
-		
+
 		return false;
+
 	}
 
 }

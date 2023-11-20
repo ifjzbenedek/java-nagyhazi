@@ -8,21 +8,31 @@ public abstract class Item {
 	protected String name;
 	private Coordinate cord;
 
-	private Coordinate RandomizeNewItem()
+	public static Coordinate RandomizeNewItem()
 	{
 		Random r = new Random();
 
-		return new Coordinate(r.nextInt(19), r.nextInt(19));
+		return new Coordinate(r.nextInt(20), r.nextInt(20));
 	}
-	public Item(boolean pua)
+	public Item()
 	{
-		pickupable = pua;
-		cord = RandomizeNewItem();
+		cord = new Coordinate(-1,-1);
 	}
 	
 	//Boolean, mert true esetén falat rakunk le
 	public abstract boolean Effect(Snake pickUp, Snake other);
 
-
+	public void setCoordinates(Coordinate c)
+	{
+		cord = c;
+	}
+	public Coordinate getCoordinates()
+	{
+		return cord;
+	}
+	public boolean getPickupAble()
+	{return pickupable;}
+	public String getName()
+	{return name;}
 	
 }

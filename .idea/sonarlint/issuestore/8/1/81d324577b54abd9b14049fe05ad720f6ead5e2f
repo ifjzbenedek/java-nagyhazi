@@ -1,0 +1,24 @@
+
+Q
+java:S1066T"/Merge this if statement with the enclosing one.(„Ç¤ôşÿÿÿÿ8Ş×‰î¾1
+Q
+java:S1066_"/Merge this if statement with the enclosing one.(¥œĞ‹ıÿÿÿÿ8Ş×‰î¾1
+
+java:S1319#"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ª³³8Ş×‰î¾1
+
+java:S1319o"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(š©ø¿8Ş×‰î¾1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ªéÇç8Ş×‰î¾1
+j	java:S100'"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õ½ûş8áØ‰î¾1
+t
+java:S37766"RRefactor this method to reduce its Cognitive Complexity from 31 to the 15 allowed.(ã½¾Õÿÿÿÿÿ8ñØ‰î¾1
+C	java:S1318""Add a default case to this switch.(µÙ‚ñúÿÿÿÿ8ñØ‰î¾1
+j	java:S100y"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ª“Öğ8ñØ‰î¾1
+;
+java:S2119}"Save and re-use this "Random".(–áÍÈ8ñØ‰î¾1
+p	java:S100¦"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œÅî§úÿÿÿÿ8ñØ‰î¾1
+k	java:S100¶"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸Æ´š8ñØ‰î¾1
+k	java:S100É"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®ÃÆ°8ñØ‰î¾1
+H	java:S106×"+Replace this use of System.out by a logger.(­‰°Ø8ñØ‰î¾1
+H	java:S106ç"+Replace this use of System.out by a logger.(…³»é8ñØ‰î¾1
+N
+java:S1128",Remove this unused import 'java.util.Timer'.(†£ñáÿÿÿÿÿ8ñØ‰î¾1

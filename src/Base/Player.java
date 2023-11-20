@@ -2,11 +2,10 @@ package Base;
 
 public class Player {
 	private Item ownedPickUpAble;
+	private boolean haspickUpAble = false;
 	private Snake snake;
 	private String name;
 
-	char selfActivateAndWall;
-	char opponentActivate;
 	public Player(Snake s, String n)
 	{
 		name = n;
@@ -19,6 +18,15 @@ public class Player {
 	public void setOwnedPickUpAble(Item i)
 	{
 		ownedPickUpAble = i;
+		haspickUpAble = true;
+	}
+	public boolean gethasPicUpAble()
+	{
+		return haspickUpAble;
+	}
+	public void sethasPickUpAble(boolean tf)
+	{
+		haspickUpAble = tf;
 	}
 	public Item getOwnedPickUpAble()
 	{

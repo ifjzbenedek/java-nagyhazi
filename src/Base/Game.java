@@ -1,13 +1,21 @@
 package Base;
 
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 
 public class Game {
 
     private Player p1;
+    private int wallCounterp1 = 0;
     private Player p2;
+    private int wallCounterp2 = 0;
+
+    private int itemGeneratorCounter = 0;
+    private int p1MoveCounter = 0;
+    private int p2MoveCounter = 0;
 
     int width = 40;
     int height = 40;
@@ -49,39 +57,60 @@ public class Game {
         {
             case KeyEvent.VK_LEFT:
                 if(p2.getSnake().getDirection() != Direction.RIGHT)
-                {p2.getSnake().AdjustDirection(Direction.LEFT);break;}
+                {p2.getSnake().AdjustDirection(Direction.LEFT);}break;
             case KeyEvent.VK_RIGHT:
                 if(p2.getSnake().getDirection() != Direction.LEFT)
-                {p2.getSnake().AdjustDirection(Direction.RIGHT);break;}
+                {p2.getSnake().AdjustDirection(Direction.RIGHT);}break;
             case KeyEvent.VK_UP:
                 if(p2.getSnake().getDirection() != Direction.DOWN)
-                {p2.getSnake().AdjustDirection(Direction.UP);break;}
+                {p2.getSnake().AdjustDirection(Direction.UP);}break;
             case KeyEvent.VK_DOWN:
                 if(p2.getSnake().getDirection() != Direction.UP)
-                {p2.getSnake().AdjustDirection(Direction.DOWN);break;}
+                {p2.getSnake().AdjustDirection(Direction.DOWN);}break;
             case KeyEvent.VK_A:
                 if(p1.getSnake().getDirection() != Direction.RIGHT)
-                {p1.getSnake().AdjustDirection(Direction.LEFT);break;}
+                {p1.getSnake().AdjustDirection(Direction.LEFT);}break;
             case KeyEvent.VK_D:
                 if(p1.getSnake().getDirection() != Direction.LEFT)
-                {p1.getSnake().AdjustDirection(Direction.RIGHT);break;}
+                {p1.getSnake().AdjustDirection(Direction.RIGHT);}break;
             case KeyEvent.VK_W:
                 if(p1.getSnake().getDirection() != Direction.DOWN)
-                {p1.getSnake().AdjustDirection(Direction.UP);break;}
+                {p1.getSnake().AdjustDirection(Direction.UP);}break;
             case KeyEvent.VK_S:
                 if(p1.getSnake().getDirection() != Direction.UP)
-                {p1.getSnake().AdjustDirection(Direction.DOWN);break;}
+                {p1.getSnake().AdjustDirection(Direction.DOWN);}break;
             case KeyEvent.VK_F:
-                p1.getOwnedPickUpAble().Effect(p1.getSnake(), p2.getSnake()); break;
+                if(p1.gethasPicUpAble())
+                    if(p1.getOwnedPickUpAble().Effect(p1.getSnake(), p2.getSnake()))
+                        wallCounterp1 = 3;
+                p1.sethasPickUpAble(false);
+                break;
             case KeyEvent.VK_G:
-                p1.getOwnedPickUpAble().Effect(p2.getSnake(), p1.getSnake());break;
+                if(p1.gethasPicUpAble())
+                    p1.getOwnedPickUpAble().Effect(p2.getSnake(), p1.getSnake());
+                p1.sethasPickUpAble(false);
+                break;
             case KeyEvent.VK_K:
-                p2.getOwnedPickUpAble().Effect(p2.getSnake(), p1.getSnake());break;
+                if(p2.gethasPicUpAble())
+                    if(p2.getOwnedPickUpAble().Effect(p2.getSnake(), p1.getSnake()))
+                        wallCounterp2 = 3;
+                p2.sethasPickUpAble(false);
+                break;
             case KeyEvent.VK_L:
-                p2.getOwnedPickUpAble().Effect(p1.getSnake(), p2.getSnake());break;
+                if(p2.gethasPicUpAble())
+                {
+                    p2.getOwnedPickUpAble().Effect(p2.getSnake(), p1.getSnake());
+                }
+                p2.sethasPickUpAble(false);
+                break;
 
 
         }
+    }
+
+    public ArrayList<Item> getItems()
+    {
+        return items;
     }
 
     public Game()
@@ -92,6 +121,46 @@ public class Game {
     private void GenerateItem()
     {
 
+        Item newItem;
+        Random rnd = new Random();
+        int decider = rnd.nextInt(7);
+        boolean success = false;
+        switch(decider)
+        {
+            case 0: newItem = new Apple(); break;
+            case 1: newItem = new Lemon();break;
+            case 2: newItem = new BlueBerry();break;
+            case 3: newItem = new Orange();break;
+            case 5: newItem = new Kiwi();break;
+            case 6: newItem = new Raspberry();break;
+            default: newItem = new Apple();
+        }
+
+
+
+        while(!success)
+        {
+            Coordinate tmp = Item.RandomizeNewItem();
+            if(!walls.contains(tmp) && !p1.getSnake().getCoordinates().contains(tmp)
+                    && !p2.getSnake().getCoordinates().contains(tmp))
+            {
+                success = true;
+                for(int i = 0; i < items.size(); i++)
+                {
+                    if(items.get(i).getCoordinates().equals(tmp))
+                    {
+                        success = false;
+                    }
+                }
+
+                if(success)
+                {
+                    newItem.setCoordinates(tmp);
+                }
+            }
+        }
+
+        items.add(newItem);
     }
 
     private boolean DoesSnakeDie(Snake thisSnake, Snake otherSnake)
@@ -110,21 +179,69 @@ public class Game {
         return false;
     }
 
-
-    public void Step()
+    private void PlayerPickingUpItem(Player thisPlayer, Player otherPlayer)
     {
-        p1.getSnake().Move();
-        if(DoesSnakeDie(p1.getSnake(), p2.getSnake())) {
-            System.out.println("p2 nyert");
-            System.exit(0);
-        }
-        p2.getSnake().Move();
-        if(DoesSnakeDie(p2.getSnake(), p1.getSnake())) {
-            System.out.println("p1 nyert");
-            System.exit(0);
+        for(int i = 0; i < items.size(); i++)
+        {
+            if(thisPlayer.getSnake().getHeadCoordinate().equals(items.get(i).getCoordinates()))
+            {
+                if(items.get(i).getPickupAble())
+                {
+                    thisPlayer.setOwnedPickUpAble(items.get(i));
+                    thisPlayer.sethasPickUpAble(true);
+                }
+                else
+                    items.get(i).Effect(thisPlayer.getSnake(), otherPlayer.getSnake());
+
+                items.remove(i);
+            }
         }
     }
 
+    public void Step() {
 
+        p1MoveCounter++;
+        p2MoveCounter++;
+        itemGeneratorCounter++;
+
+        if(p1MoveCounter >= p1.getSnake().getMoveTimer()*10)
+        {
+            p1.getSnake().Move();
+            if (wallCounterp1 > 0) {
+                walls.add(p1.getSnake().getCoordinates().get(p1.getSnake().getCoordinates().size() - 1));
+                wallCounterp1--;
+            }
+            if (DoesSnakeDie(p1.getSnake(), p2.getSnake())) {
+                System.out.println("p2 nyert");
+                System.exit(0);
+            }
+            PlayerPickingUpItem(p1, p2);
+            p1MoveCounter = 0;
+
+        }
+
+        if(p2MoveCounter >= p2.getSnake().getMoveTimer()*10)
+        {
+            p2.getSnake().Move();
+            if (wallCounterp2 > 0) {
+                walls.add(p2.getSnake().getCoordinates().get(p2.getSnake().getCoordinates().size() - 1));
+                wallCounterp2--;
+            }
+            if (DoesSnakeDie(p2.getSnake(), p1.getSnake())) {
+                System.out.println("p1 nyert");
+                System.exit(0);
+            }
+            PlayerPickingUpItem(p2, p1);
+            p2MoveCounter = 0;
+        }
+
+        if (itemGeneratorCounter >= 100) {
+            if (items.size() == maxItems)
+                items.remove(0);
+            GenerateItem();
+            itemGeneratorCounter = 0;
+        }
+
+    }
 
 }

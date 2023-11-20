@@ -1,0 +1,21 @@
+
+{
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(•Ÿàïøÿÿÿÿ8şŸ‚ì¾1
+
+java:S1319"mThe type of "startingSnake" should be an interface such as "List" rather than the implementation "ArrayList".(šû˜ëûÿÿÿÿ8şŸ‚ì¾1
+
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Ú‰øĞ8şŸ‚ì¾1
+v	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ªéÇç8¡ ‚ì¾1
+o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(å¾Ôşÿÿÿÿ8¾ ‚ì¾1
+E	java:S108+")Either remove or fill this block of code.(Äé†ˆ8¾ ‚ì¾1
+j	java:S100/"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔÍî³8¾ ‚ì¾1
+o	java:S1005"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ¤öáÿÿÿÿÿ8¾ ‚ì¾1
+G	java:S106>"+Replace this use of System.out by a logger.(±‹Ä8Ë ‚ì¾1
+L	java:S106B"+Replace this use of System.out by a logger.(Î¢òÓúÿÿÿÿ8Ì ‚ì¾1
+L	java:S106F"+Replace this use of System.out by a logger.(½¤Í¾ûÿÿÿÿ8Î ‚ì¾1
+G	java:S106J"+Replace this use of System.out by a logger.(®Õ·8Ï ‚ì¾1
+L	java:S106O"+Replace this use of System.out by a logger.(Ù£Œûÿÿÿÿ8Ğ ‚ì¾1
+E	java:S108R")Either remove or fill this block of code.(Äé†ˆ8Ğ ‚ì¾1
+j	java:S100T"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•Ô±¾8Ğ ‚ì¾1
+j	java:S100b"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ…¥¬8Ğ ‚ì¾1
+j	java:S100f"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“¨ÛÇ8Ğ ‚ì¾1
