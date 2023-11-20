@@ -1,8 +1,13 @@
 package Base;
- class Program {
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+
+class Program {
     public static void main(String[] args) {
 
-        MainFrame mf = new MainFrame();
-        mf.setVisible(true);
+        MainFrame frame = new MainFrame();
+        frame.setVisible(true);
     }
 }

@@ -13,9 +13,9 @@ public class GamePanel extends JPanel implements ActionListener {
     final Timer t;
 
     Game game = new Game();
+
     public GamePanel()
     {
-
         this.setSize(800,800);
         this.setFocusable(true);
         t = new Timer(20,this);
@@ -40,6 +40,7 @@ public class GamePanel extends JPanel implements ActionListener {
     {
         g.fillRect(ac.GetPosX()*40, ac.GetPosY()*40, 40,40);
     }
+
     @Override
     public void paintComponent(Graphics g)
     {
@@ -91,6 +92,8 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
     }
+
+
 
 
     @Override
