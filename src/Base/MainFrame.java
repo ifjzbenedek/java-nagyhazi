@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class MainFrame extends JFrame implements ActionListener {
-    GamePanel gp = new GamePanel();
+    GamePanel gp;
     JMenuItem newGame;
     JMenuItem loadGame;
 
@@ -16,22 +19,15 @@ public class MainFrame extends JFrame implements ActionListener {
 
         this.setSize(800,800);
 
-        JMenuBar menuBar;
-        JMenu menu, submenu;
-        JMenuItem menuItem;
-        JRadioButtonMenuItem rbMenuItem;
-        JCheckBoxMenuItem cbMenuItem;
-
+        gp = new GamePanel();
+        this.add(gp);
 
         this.setJMenuBar(Menu());
-
-        this.add(gp);
     }
 
     public JMenuBar Menu()
     {
         JMenuBar menuBar = new JMenuBar();
-        //menuBar.setSize(300, 100);
         JMenu menu = new JMenu("Játék");
         newGame = new JMenuItem("Új játék indítása: K", KeyEvent.VK_K);
         loadGame = new JMenuItem("Játék betöltése: L", KeyEvent.VK_L);
@@ -50,26 +46,35 @@ public class MainFrame extends JFrame implements ActionListener {
         if (e.getSource() == newGame)
         {
             System.out.println("newGame");
+            newGame();
+
         }
         else
         {
             System.out.println("loadGame");
+            loadGame();
         }
     }
 
-    void newGame()
+    private void newGame()
     {
-
     }
 
-    void saveGame()
+
+
+    private void loadGame()
     {
+        Game g;
+        try {
+            FileInputStream f = new FileInputStream("mentes.txt");
+            ObjectInputStream in = new ObjectInputStream(f);
+            g = (Game)in.readObject();
+            in.close();
 
-    }
+            gp = new GamePanel();
+            this.add(gp);
+            gp.setGame(g);
 
-    void LloadGame()
-    {
-        // Game game =
-
+        }catch (IOException ex){}catch(ClassNotFoundException ex){}
     }
 }

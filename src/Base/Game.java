@@ -1,12 +1,13 @@
 package Base;
 
 import java.awt.event.KeyEvent;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 
-public class Game {
+public class Game implements Serializable {
 
     private Player p1;
     private int wallCounterp1 = 0;

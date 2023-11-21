@@ -1,8 +1,9 @@
 package Base;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public abstract class Item {
+public abstract class Item implements Serializable {
 
 	protected boolean pickupable;
 	protected String name;

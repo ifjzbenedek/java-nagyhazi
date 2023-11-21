@@ -1,6 +1,8 @@
 package Base;
 
-public class Orange extends Item{
+import java.io.Serializable;
+
+public class Orange extends Item implements Serializable {
 
     public Orange()
     {

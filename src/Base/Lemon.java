@@ -1,6 +1,8 @@
 package Base;
 
-public class Lemon extends Item {
+import java.io.Serializable;
+
+public class Lemon extends Item implements Serializable {
 
 	public Lemon()
 	{

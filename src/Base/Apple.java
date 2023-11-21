@@ -1,6 +1,8 @@
 package Base;
 
-public class Apple extends Item {
+import java.io.Serializable;
+
+public class Apple extends Item implements Serializable {
 
 	public Apple()
 	{

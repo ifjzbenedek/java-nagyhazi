@@ -1,6 +1,8 @@
 package Base;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 	private Item ownedPickUpAble;
 	private boolean haspickUpAble = false;
 	private Snake snake;

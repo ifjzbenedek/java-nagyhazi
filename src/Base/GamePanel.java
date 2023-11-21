@@ -2,23 +2,43 @@ package Base;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements ActionListener {
 
     final Timer t;
 
-    Game game = new Game();
+    private Game game;
 
     public GamePanel()
     {
-        this.setSize(800,800);
-        this.setFocusable(true);
+        game = new Game();
+        InitGamePanel();
         t = new Timer(20,this);
+        t.start();
+    }
+
+    public void setGame(Game g)
+    {
+        game = g;
+        InitGamePanel();
+    }
+
+    public void InitGamePanel()
+    {
+
+        this.setFocusable(true);
+
+        KeyListener[] ks = this.getKeyListeners();
+        for(KeyListener k: ks)
+        {
+            this.removeKeyListener(k);
+        }
+
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -26,8 +46,9 @@ public class GamePanel extends JPanel implements ActionListener {
                 game.turnKeyPressesIntoInfos(e.getKeyCode());
             }
         });
-        t.start();
+
     }
+
 
     private void DrawCoordinateArray(ArrayList<Coordinate> ac, Graphics g)
     {
@@ -93,13 +114,22 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
-
+    private void saveGame()
+    {
+        try{
+            FileOutputStream f = new FileOutputStream("mentes.txt");
+            ObjectOutputStream out = new ObjectOutputStream(f);
+            out.writeObject(game);
+            out.close();
+        }catch( IOException ex){}
+    }
 
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
         game.Step();
+        saveGame();
         repaint();
     }
 }

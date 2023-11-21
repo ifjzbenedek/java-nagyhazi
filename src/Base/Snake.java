@@ -1,7 +1,8 @@
 package Base;
 
+import java.io.Serializable;
 import java.util.*;
-public class Snake {
+public class Snake implements Serializable {
 
 	private ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
 	private double moveTimer = 1;

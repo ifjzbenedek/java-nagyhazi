@@ -1,6 +1,8 @@
 package Base;
 
-public class Kiwi extends Item{
+import java.io.Serializable;
+
+public class Kiwi extends Item implements Serializable {
 
     public Kiwi()
     {

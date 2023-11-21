@@ -1,6 +1,8 @@
 package Base;
 
-public class BlueBerry extends Item{
+import java.io.Serializable;
+
+public class BlueBerry extends Item implements Serializable {
 
     public BlueBerry()
     {

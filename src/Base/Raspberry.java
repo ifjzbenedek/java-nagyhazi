@@ -1,6 +1,8 @@
 package Base;
 
-public class Raspberry extends Item {
+import java.io.Serializable;
+
+public class Raspberry extends Item implements Serializable {
 
 	public Raspberry()
 	{
