@@ -3,9 +3,7 @@ package Base;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -16,8 +14,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public GamePanel()
     {
-        game = new Game();
-        InitGamePanel();
+        initGamePanel();
         t = new Timer(20,this);
         t.start();
     }
@@ -25,30 +22,34 @@ public class GamePanel extends JPanel implements ActionListener {
     public void setGame(Game g)
     {
         game = g;
-        InitGamePanel();
+        initGamePanel();
     }
 
-    public void InitGamePanel()
-    {
-
-        this.setFocusable(true);
+    private void initGamePanel()
+    { 
+        /*this.setFocusable(true);
 
         KeyListener[] ks = this.getKeyListeners();
         for(KeyListener k: ks)
         {
             this.removeKeyListener(k);
-        }
-
+        }*/
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
-                game.turnKeyPressesIntoInfos(e.getKeyCode());
+                onKeyPressed(e.getKeyCode());
+                // game.turnKeyPressesIntoInfos(e.getKeyCode());
             }
         });
 
+
     }
 
+    void onKeyPressed(int keyCode)
+    {
+        game.turnKeyPressesIntoInfos(keyCode);
+    }
 
     private void DrawCoordinateArray(ArrayList<Coordinate> ac, Graphics g)
     {
@@ -131,5 +132,24 @@ public class GamePanel extends JPanel implements ActionListener {
         game.Step();
         saveGame();
         repaint();
+    }
+
+    public void newGame()
+    {
+        game = new Game();
+        initGamePanel();
+    }
+
+    public void loadGame()
+    {
+        Game g;
+        try {
+            FileInputStream f = new FileInputStream("mentes.txt");
+            ObjectInputStream in = new ObjectInputStream(f);
+            g = (Game)in.readObject();
+            in.close();
+
+
+        }catch (IOException ex){}catch(ClassNotFoundException ex){}
     }
 }

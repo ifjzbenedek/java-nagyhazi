@@ -46,35 +46,19 @@ public class MainFrame extends JFrame implements ActionListener {
         if (e.getSource() == newGame)
         {
             System.out.println("newGame");
-            newGame();
+            gp.newGame();
 
         }
         else
         {
             System.out.println("loadGame");
-            loadGame();
+            gp.loadGame();
         }
     }
 
-    private void newGame()
-    {
-    }
 
 
 
-    private void loadGame()
-    {
-        Game g;
-        try {
-            FileInputStream f = new FileInputStream("mentes.txt");
-            ObjectInputStream in = new ObjectInputStream(f);
-            g = (Game)in.readObject();
-            in.close();
 
-            gp = new GamePanel();
-            this.add(gp);
-            gp.setGame(g);
 
-        }catch (IOException ex){}catch(ClassNotFoundException ex){}
-    }
 }
