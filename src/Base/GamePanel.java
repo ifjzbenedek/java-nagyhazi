@@ -8,45 +8,50 @@ import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements ActionListener {
 
-    final Timer t;
+    final Timer timer;
 
+    boolean isRunning = false;
     private Game game;
 
     public GamePanel()
     {
+        setFocusable(true);
+
         initGamePanel();
-        t = new Timer(20,this);
-        t.start();
+        timer = new Timer(20,this);
+        timer.start();
     }
 
-    public void setGame(Game g)
+    public void newGame()
     {
-        game = g;
-        initGamePanel();
+        game = new Game();
+        isRunning = true;
+    }
+
+    public void loadGame()
+    {
+
+        try {
+            FileInputStream f = new FileInputStream("mentes.txt");
+            ObjectInputStream in = new ObjectInputStream(f);
+            game = (Game)in.readObject();
+            isRunning = true;
+
+        }catch (IOException ex){}catch(ClassNotFoundException ex){}
     }
 
     private void initGamePanel()
-    { 
-        /*this.setFocusable(true);
-
-        KeyListener[] ks = this.getKeyListeners();
-        for(KeyListener k: ks)
-        {
-            this.removeKeyListener(k);
-        }*/
+    {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
                 onKeyPressed(e.getKeyCode());
-                // game.turnKeyPressesIntoInfos(e.getKeyCode());
             }
         });
-
-
     }
 
-    void onKeyPressed(int keyCode)
+    private void onKeyPressed(int keyCode)
     {
         game.turnKeyPressesIntoInfos(keyCode);
     }
@@ -66,51 +71,41 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g)
     {
-        super.paintComponent(g);
-        ArrayList<Coordinate> sTemp = game.getPlayer(0).getSnake().getCoordinates();
-        g.setColor(Color.GREEN);
-        DrawCoordinateArray(sTemp, g);
+        if(isRunning) {
+            super.paintComponent(g);
+            ArrayList<Coordinate> sTemp = game.getPlayer(0).getSnake().getCoordinates();
+            g.setColor(Color.GREEN);
+            DrawCoordinateArray(sTemp, g);
 
-        g.setColor(Color.BLUE);
-        sTemp = game.getPlayer(1).getSnake().getCoordinates();
-        DrawCoordinateArray(sTemp, g);
+            g.setColor(Color.BLUE);
+            sTemp = game.getPlayer(1).getSnake().getCoordinates();
+            DrawCoordinateArray(sTemp, g);
 
-        g.setColor(Color.DARK_GRAY);
-        sTemp = game.getWalls();
-        DrawCoordinateArray(sTemp, g);
+            g.setColor(Color.DARK_GRAY);
+            sTemp = game.getWalls();
+            DrawCoordinateArray(sTemp, g);
 
 
-        for(int i = 0; i < game.getItems().size(); i++)
-        {
-            if(game.getItems().get(i).getName().equals("apple"))
-            {
-                g.setColor(Color.RED);
-                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
-            }
-            else if(game.getItems().get(i).getName().equals("lemon"))
-            {
-                g.setColor(Color.YELLOW);
-                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
-            }
-            else if(game.getItems().get(i).getName().equals("blueberry"))
-            {
-                g.setColor(Color.BLUE);
-                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
-            }
-            else if(game.getItems().get(i).getName().equals("orange"))
-            {
-                g.setColor(Color.ORANGE);
-                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
-            }
-            else if(game.getItems().get(i).getName().equals("kiwi"))
-            {
-                g.setColor(Color.GREEN);
-                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
-            }
-            else if(game.getItems().get(i).getName().equals("raspberry"))
-            {
-                g.setColor(Color.PINK);
-                DrawCoordinate(game.getItems().get(i).getCoordinates(),g);
+            for (int i = 0; i < game.getItems().size(); i++) {
+                if (game.getItems().get(i).getName().equals("apple")) {
+                    g.setColor(Color.RED);
+                    DrawCoordinate(game.getItems().get(i).getCoordinates(), g);
+                } else if (game.getItems().get(i).getName().equals("lemon")) {
+                    g.setColor(Color.YELLOW);
+                    DrawCoordinate(game.getItems().get(i).getCoordinates(), g);
+                } else if (game.getItems().get(i).getName().equals("blueberry")) {
+                    g.setColor(Color.BLUE);
+                    DrawCoordinate(game.getItems().get(i).getCoordinates(), g);
+                } else if (game.getItems().get(i).getName().equals("orange")) {
+                    g.setColor(Color.ORANGE);
+                    DrawCoordinate(game.getItems().get(i).getCoordinates(), g);
+                } else if (game.getItems().get(i).getName().equals("kiwi")) {
+                    g.setColor(Color.GREEN);
+                    DrawCoordinate(game.getItems().get(i).getCoordinates(), g);
+                } else if (game.getItems().get(i).getName().equals("raspberry")) {
+                    g.setColor(Color.PINK);
+                    DrawCoordinate(game.getItems().get(i).getCoordinates(), g);
+                }
             }
         }
     }
@@ -129,27 +124,12 @@ public class GamePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        game.Step();
-        saveGame();
-        repaint();
+        if(isRunning)
+        {
+            game.Step();
+            saveGame();
+            repaint();
+        }
     }
 
-    public void newGame()
-    {
-        game = new Game();
-        initGamePanel();
-    }
-
-    public void loadGame()
-    {
-        Game g;
-        try {
-            FileInputStream f = new FileInputStream("mentes.txt");
-            ObjectInputStream in = new ObjectInputStream(f);
-            g = (Game)in.readObject();
-            in.close();
-
-
-        }catch (IOException ex){}catch(ClassNotFoundException ex){}
-    }
 }

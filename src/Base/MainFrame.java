@@ -16,6 +16,8 @@ public class MainFrame extends JFrame implements ActionListener {
     public MainFrame()
     {
         super("##Snake Battles##");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         this.setSize(800,800);
 
@@ -55,10 +57,4 @@ public class MainFrame extends JFrame implements ActionListener {
             gp.loadGame();
         }
     }
-
-
-
-
-
-
 }
