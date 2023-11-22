@@ -1,6 +1,7 @@
 package Base;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.*;
 public class Snake implements Serializable {
 
@@ -44,6 +45,8 @@ public class Snake implements Serializable {
 		{}
 		return false;
 	}
+
+
 	
 	public void AdjustDirection(Direction d)
 	{

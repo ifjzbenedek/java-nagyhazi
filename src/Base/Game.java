@@ -166,7 +166,7 @@ public class Game implements Serializable {
 
     private boolean DoesSnakeDie(Snake thisSnake, Snake otherSnake)
     {
-        if(otherSnake.IsContained(thisSnake.getHeadCoordinate()) || thisSnake.getHeadCoordinate().GetPosX() >= 20 || thisSnake.getHeadCoordinate().GetPosY() >= 20 || thisSnake.getHeadCoordinate().GetPosX() < 0 || thisSnake.getHeadCoordinate().GetPosY() < 0 )
+        if(otherSnake.IsContained(thisSnake.getHeadCoordinate()) || thisSnake.getHeadCoordinate().GetPosX() >= 20 || thisSnake.getHeadCoordinate().GetPosY() >= 20 || thisSnake.getHeadCoordinate().GetPosX() < 0 || thisSnake.getHeadCoordinate().GetPosY() < 0)
             return true;
         else
         {

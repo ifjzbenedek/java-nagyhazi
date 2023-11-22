@@ -1,5 +1,8 @@
-package Base;
+package test;
 
+import Base.Coordinate;
+import Base.Direction;
+import Base.Snake;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,10 +16,10 @@ public class SnakeTest {
     public void move() {
         ArrayList<Coordinate> al = new ArrayList<>();
         Coordinate c1 = new Coordinate(5,5);
-        Coordinate c2 = new Coordinate(4,4);
+        Coordinate c2 = new Coordinate(5,4);
         ArrayList<Coordinate> after = new ArrayList<>();
         Coordinate a1 = new Coordinate(5,6);
-        Coordinate a2 = new Coordinate(4,5);
+        Coordinate a2 = new Coordinate(5,5);
         after.add(a1);
         after.add(a2);
         al.add(c1);
@@ -30,4 +33,5 @@ public class SnakeTest {
         Assert.assertEquals(s.getCoordinates().get(1).GetPosX(), after.get(1).GetPosX());
 
     }
+
 }
