@@ -21,8 +21,12 @@ public class Coordinate implements Serializable {
 		return PosY;
 	}
 
-	
-	//tesztelendő
+
+	/**
+	 *
+	 * @param c
+	 * @return
+	 */
 	public boolean equals(Coordinate c)
 	{
 		if(this == c)

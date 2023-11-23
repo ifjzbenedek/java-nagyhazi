@@ -26,7 +26,10 @@ public class BlueBerryTest {
         Direction d = Direction.DOWN;
         Snake s1 = new Snake(a1, d);
         Snake s2 = new Snake(a2,d);
-        b.Effect(s1, s2);
+        try {
+            b.Effect(s1, s2);
+        } catch(EmptyException ee){}
+
         Assert.assertEquals(0.7, s1.getMoveTimer(), 0);
     }
 }

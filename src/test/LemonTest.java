@@ -30,7 +30,10 @@ public class LemonTest {
         Direction d = Direction.DOWN;
         Snake s1 = new Snake(a1, d);
         Snake s2 = new Snake(a2,d);
-        l.Effect(s1, s2);
+        try {
+            l.Effect(s1, s2);
+        } catch(EmptyException ee){}
+
         Assert.assertEquals(1, s2.getCoordinates().size(), 0);
 
     }

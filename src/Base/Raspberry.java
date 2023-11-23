@@ -10,7 +10,7 @@ public class Raspberry extends Item implements Serializable {
 		pickupable = false;
 	}
 	
-	public boolean Effect(Snake pickUp, Snake other)
+	public boolean Effect(Snake pickUp, Snake other) throws EmptyException
 	{
 		pickUp.IncreaseSize();
 		other.DecreaseSize();

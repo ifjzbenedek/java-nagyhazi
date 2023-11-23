@@ -1,5 +1,7 @@
 package Base;
 
+import sun.invoke.empty.Empty;
+
 import java.io.Serializable;
 
 public class Orange extends Item implements Serializable {
@@ -9,7 +11,7 @@ public class Orange extends Item implements Serializable {
         pickupable = true;
         name = "orange";
     }
-    public boolean Effect(Snake thisSnake, Snake otherSnake)
+    public boolean Effect(Snake thisSnake, Snake otherSnake) throws EmptyException
     {
         thisSnake.decreaseSpeed();
         return false;

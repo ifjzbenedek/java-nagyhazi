@@ -2,6 +2,7 @@ package test;
 
 import Base.Coordinate;
 import Base.Direction;
+import Base.EmptyException;
 import Base.Snake;
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,7 +27,9 @@ public class SnakeTest {
         al.add(c2);
         Direction d = Direction.DOWN;
         Snake s = new Snake(al,d);
-        s.Move();
+        try {
+            s.Move();
+        } catch(EmptyException ee){}
         Assert.assertEquals(s.getCoordinates().get(0).GetPosY(), after.get(0).GetPosY());
         Assert.assertEquals(s.getCoordinates().get(0).GetPosX(), after.get(0).GetPosX());
         Assert.assertEquals(s.getCoordinates().get(1).GetPosY(), after.get(1).GetPosY());

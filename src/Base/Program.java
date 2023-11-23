@@ -5,5 +5,7 @@ class Program {
 
         MainFrame frame = new MainFrame();
         frame.setVisible(true);
+
+
     }
 }

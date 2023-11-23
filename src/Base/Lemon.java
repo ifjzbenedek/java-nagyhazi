@@ -10,7 +10,7 @@ public class Lemon extends Item implements Serializable {
 		pickupable = false;
 	}
 	
-	public boolean Effect(Snake pickUp, Snake other)
+	public boolean Effect(Snake pickUp, Snake other) throws EmptyException
 	{
 		other.DecreaseSize();
 		return false;

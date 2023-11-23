@@ -42,16 +42,22 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void initGamePanel()
     {
+        this.setSize(800,800);
+
+
         this.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                onKeyPressed(e.getKeyCode());
-            }
-        });
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    super.keyPressed(e);
+                    try {
+                        onKeyPressed(e.getKeyCode());
+                    } catch (EmptyException ee){}
+                }
+            });
+
     }
 
-    private void onKeyPressed(int keyCode)
+    private void onKeyPressed(int keyCode) throws EmptyException
     {
         game.turnKeyPressesIntoInfos(keyCode);
     }
@@ -126,7 +132,18 @@ public class GamePanel extends JPanel implements ActionListener {
     {
         if(isRunning)
         {
-            game.Step();
+            if(game.Step() == Winner.PLAYER1)
+            {
+                System.out.println("p1 nyert");
+                JOptionPane.showMessageDialog(null, "Player 1 nyert");
+                newGame();
+            }
+            else if(game.Step() == Winner.PLAYER2)
+            {
+                System.out.println("p2 nyert");
+                JOptionPane.showMessageDialog(null, "Player 2 nyert");
+                newGame();
+            }
             saveGame();
             repaint();
         }

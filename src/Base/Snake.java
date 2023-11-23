@@ -54,9 +54,9 @@ public class Snake implements Serializable {
 	}
 	
 	//Base.EmptyException megírandó
-	public void Move()
+	public void Move() throws EmptyException
 	{
-		try {
+
 			if (coordinates.isEmpty())
 				throw new EmptyException();
 			Coordinate newHead = new Coordinate(-1, -1);
@@ -82,29 +82,44 @@ public class Snake implements Serializable {
 			coordinates.remove(coordinates.size() - 1);
 			System.out.println("Hossz" + coordinates.size());
 
-		}catch(EmptyException ee)
-		{}
+
 	}
 	public void IncreaseSize()
 	{
-		int idxOfLastCord = coordinates.size()-1;
-		int idxOfOneBeforeLastCord = coordinates.size()-2;
+		if(coordinates.size() > 1) {
+			int idxOfLastCord = coordinates.size() - 1;
+			int idxOfOneBeforeLastCord = coordinates.size() - 2;
 
-		
-		coordinates.add(new Coordinate(coordinates.get(idxOfLastCord).GetPosX() * 2 - coordinates.get(idxOfOneBeforeLastCord).GetPosX(),
-				coordinates.get(idxOfLastCord).GetPosY() * 2 - coordinates.get(idxOfOneBeforeLastCord).GetPosY()));
+
+			coordinates.add(new Coordinate(coordinates.get(idxOfLastCord).GetPosX() * 2 - coordinates.get(idxOfOneBeforeLastCord).GetPosX(),
+					coordinates.get(idxOfLastCord).GetPosY() * 2 - coordinates.get(idxOfOneBeforeLastCord).GetPosY()));
+		}
+		else
+		{
+			switch(direction)
+			{
+				case UP:
+					coordinates.add(new Coordinate(coordinates.get(0).GetPosX(),coordinates.get(0).GetPosY()-1)); break;
+				case DOWN:
+					coordinates.add(new Coordinate(coordinates.get(0).GetPosX(),coordinates.get(0).GetPosY()+1)); break;
+				case LEFT:
+					coordinates.add(new Coordinate(coordinates.get(0).GetPosX()-1,coordinates.get(0).GetPosY())); break;
+				case RIGHT:
+					coordinates.add(new Coordinate(coordinates.get(0).GetPosX()+1,coordinates.get(0).GetPosY())); break;
+			}
+		}
 	}
 	public Coordinate getHeadCoordinate()
 	{
 		return coordinates.get(0);
 	}
 	//megnézzük minden kör elején, ha true, akkor nyert a másik kígyót irányító player
-	public boolean SnakeIsEmpty()
+
+	public void DecreaseSize() throws EmptyException
 	{
-		return coordinates.isEmpty();
-	}
-	public void DecreaseSize()
-	{
+		if(coordinates.isEmpty())
+			throw new EmptyException();
+
 		coordinates.remove(coordinates.size()-1);
 	}
 	public void increaseSpeed()

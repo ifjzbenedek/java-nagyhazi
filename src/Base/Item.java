@@ -9,6 +9,9 @@ public abstract class Item implements Serializable {
 	protected String name;
 	private Coordinate cord;
 
+	/**
+	 * @return	Kisorsol egy random koordinátát.
+	 */
 	public static Coordinate RandomizeNewItem()
 	{
 		Random r = new Random();
@@ -21,7 +24,7 @@ public abstract class Item implements Serializable {
 	}
 	
 	//Boolean, mert true esetén falat rakunk le
-	public abstract boolean Effect(Snake pickUp, Snake other);
+	public abstract boolean Effect(Snake pickUp, Snake other) throws EmptyException;
 
 	public void setCoordinates(Coordinate c)
 	{

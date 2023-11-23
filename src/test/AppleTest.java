@@ -25,7 +25,9 @@ public class AppleTest {
         Direction d = Direction.DOWN;
         Snake s1 = new Snake(a1, d);
         Snake s2 = new Snake(a2,d);
-        a.Effect(s1, s2);
+        try {
+            a.Effect(s1, s2);
+        } catch(EmptyException ee){};
         Assert.assertEquals(3, s1.getCoordinates().size(), 0);
     }
 }

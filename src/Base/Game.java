@@ -15,6 +15,7 @@ public class Game implements Serializable {
     private int wallCounterp2 = 0;
 
     private int itemGeneratorCounter = 0;
+    private int ticksUntilNextItem;
     private int p1MoveCounter = 0;
     private int p2MoveCounter = 0;
 
@@ -37,7 +38,7 @@ public class Game implements Serializable {
     {
         return walls;
     }
-    private void InitializePlayers()
+    public void InitializePlayers()
     {
         ArrayList<Coordinate> s1 = new ArrayList<>();
         s1.add(new Coordinate(0,0));
@@ -52,7 +53,7 @@ public class Game implements Serializable {
         p1 = new Player(new Snake(s1, Direction.DOWN), "Player1");
         p2 = new Player(new Snake(s2, Direction.UP), "Player2");
     }
-    public void turnKeyPressesIntoInfos(int pushedButton)
+    public void turnKeyPressesIntoInfos(int pushedButton) throws EmptyException
     {
         switch(pushedButton)
         {
@@ -109,6 +110,7 @@ public class Game implements Serializable {
         }
     }
 
+
     public ArrayList<Item> getItems()
     {
         return items;
@@ -117,9 +119,10 @@ public class Game implements Serializable {
     public Game()
     {
         InitializePlayers();
+        itemTickUntilItemGeneration();
         GenerateItem();
     }
-    private void GenerateItem()
+    public void GenerateItem()
     {
 
         Item newItem;
@@ -164,7 +167,7 @@ public class Game implements Serializable {
         items.add(newItem);
     }
 
-    private boolean DoesSnakeDie(Snake thisSnake, Snake otherSnake)
+    public boolean DoesSnakeDie(Snake thisSnake, Snake otherSnake)
     {
         if(otherSnake.IsContained(thisSnake.getHeadCoordinate()) || thisSnake.getHeadCoordinate().GetPosX() >= 20 || thisSnake.getHeadCoordinate().GetPosY() >= 20 || thisSnake.getHeadCoordinate().GetPosX() < 0 || thisSnake.getHeadCoordinate().GetPosY() < 0)
             return true;
@@ -180,7 +183,7 @@ public class Game implements Serializable {
         return false;
     }
 
-    private void PlayerPickingUpItem(Player thisPlayer, Player otherPlayer)
+    private void PlayerPickingUpItem(Player thisPlayer, Player otherPlayer) throws EmptyException
     {
         for(int i = 0; i < items.size(); i++)
         {
@@ -194,55 +197,72 @@ public class Game implements Serializable {
                 else
                     items.get(i).Effect(thisPlayer.getSnake(), otherPlayer.getSnake());
 
+
                 items.remove(i);
             }
         }
     }
 
-    public void Step() {
+    public Winner Step() {
 
         p1MoveCounter++;
         p2MoveCounter++;
         itemGeneratorCounter++;
 
-        if(p1MoveCounter >= p1.getSnake().getMoveTimer()*10)
+        try {
+            if (p1MoveCounter >= p1.getSnake().getMoveTimer() * 15) {
+                p1.getSnake().Move();
+                if (wallCounterp1 > 0) {
+                    walls.add(p1.getSnake().getCoordinates().get(p1.getSnake().getCoordinates().size() - 1));
+                    wallCounterp1--;
+                }
+                if (DoesSnakeDie(p1.getSnake(), p2.getSnake())) {
+                    return Winner.PLAYER2;
+                }
+                PlayerPickingUpItem(p1, p2);
+                p1MoveCounter = 0;
+
+            }
+        }catch(EmptyException ee)
         {
-            p1.getSnake().Move();
-            if (wallCounterp1 > 0) {
-                walls.add(p1.getSnake().getCoordinates().get(p1.getSnake().getCoordinates().size() - 1));
-                wallCounterp1--;
-            }
-            if (DoesSnakeDie(p1.getSnake(), p2.getSnake())) {
-                System.out.println("p2 nyert");
-                System.exit(0);
-            }
-            PlayerPickingUpItem(p1, p2);
-            p1MoveCounter = 0;
-
+            return Winner.PLAYER2;
         }
 
-        if(p2MoveCounter >= p2.getSnake().getMoveTimer()*10)
+        try {
+            if (p2MoveCounter >= p2.getSnake().getMoveTimer() * 15) {
+                p2.getSnake().Move();
+                if (wallCounterp2 > 0) {
+                    walls.add(p2.getSnake().getCoordinates().get(p2.getSnake().getCoordinates().size() - 1));
+                    wallCounterp2--;
+                }
+                if (DoesSnakeDie(p2.getSnake(), p1.getSnake())) {
+                    System.out.println("p1 nyert");
+                    return Winner.PLAYER1;
+                }
+                PlayerPickingUpItem(p2, p1);
+                p2MoveCounter = 0;
+            }
+
+            if (itemGeneratorCounter >= ticksUntilNextItem) {
+                if (items.size() == maxItems)
+                    items.remove(0);
+                GenerateItem();
+                itemGeneratorCounter = 0;
+                itemTickUntilItemGeneration();
+            }
+        }catch (EmptyException ee)
         {
-            p2.getSnake().Move();
-            if (wallCounterp2 > 0) {
-                walls.add(p2.getSnake().getCoordinates().get(p2.getSnake().getCoordinates().size() - 1));
-                wallCounterp2--;
-            }
-            if (DoesSnakeDie(p2.getSnake(), p1.getSnake())) {
-                System.out.println("p1 nyert");
-                System.exit(0);
-            }
-            PlayerPickingUpItem(p2, p1);
-            p2MoveCounter = 0;
+            return Winner.PLAYER1;
         }
+            return Winner.NOONE;
 
-        if (itemGeneratorCounter >= 100) {
-            if (items.size() == maxItems)
-                items.remove(0);
-            GenerateItem();
-            itemGeneratorCounter = 0;
-        }
 
+    }
+
+    private void itemTickUntilItemGeneration()
+    {
+        Random rnd = new Random();
+        ticksUntilNextItem = 80 + rnd.nextInt(70);
     }
 
 }

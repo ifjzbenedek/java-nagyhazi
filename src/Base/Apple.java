@@ -10,7 +10,7 @@ public class Apple extends Item implements Serializable {
 		name = "apple";
 	}
 	
-	public boolean Effect(Snake pickUp, Snake other)
+	public boolean Effect(Snake pickUp, Snake other) throws EmptyException
 	{
 
 		pickUp.IncreaseSize();

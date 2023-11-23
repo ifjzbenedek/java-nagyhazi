@@ -18,8 +18,8 @@ public class MainFrame extends JFrame implements ActionListener {
         super("##Snake Battles##");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        this.setSize(800,860);
 
-        this.setSize(800,800);
 
         gp = new GamePanel();
         this.add(gp);
@@ -31,8 +31,8 @@ public class MainFrame extends JFrame implements ActionListener {
     {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Játék");
-        newGame = new JMenuItem("Új játék indítása: K", KeyEvent.VK_K);
-        loadGame = new JMenuItem("Játék betöltése: L", KeyEvent.VK_L);
+        newGame = new JMenuItem("Új játék indítása", KeyEvent.VK_K);
+        loadGame = new JMenuItem("Játék betöltése", KeyEvent.VK_L);
 
         newGame.addActionListener(this);
         loadGame.addActionListener(this);

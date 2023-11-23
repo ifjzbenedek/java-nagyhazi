@@ -1,9 +1,6 @@
 package test;
 
-import Base.Coordinate;
-import Base.Direction;
-import Base.Raspberry;
-import Base.Snake;
+import Base.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,7 +27,9 @@ public class RaspberryTest {
         Direction d = Direction.DOWN;
         Snake s1 = new Snake(a1, d);
         Snake s2 = new Snake(a2,d);
-        r.Effect(s1, s2);
+        try {
+            r.Effect(s1, s2);
+        } catch(EmptyException ee){}
         Assert.assertEquals(1, s2.getCoordinates().size(), 0);
         Assert.assertEquals(3, s1.getCoordinates().size(), 0);
     }
